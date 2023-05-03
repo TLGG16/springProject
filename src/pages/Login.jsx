@@ -23,43 +23,18 @@ const Login = () => {
         await axios.post("http://localhost:8080/login", 
         UserClass
         ).then(response => {
-            localStorage.setItem("user", JSON.stringify( response.data))
+            // localStorage.setItem("user", JSON.stringify( response.data))
+            localStorage.setItem("user", JSON.stringify({
+                "user_id": response.data.user_id,
+                "role" : response.data.role,
+                "person" : response.data.person,
+            } 
+            ))
             
         }).catch(error =>{
             console.log(error)
         })
     }
-
-
-    
-
-
-
-
-    // const serverURL = axios.create({
-    //     baseURL: "http://localhost:8080/"
-    // })
-
-    
-
-    // const postLogin = async (data) => {
-    //     console.log(data)
-    //     const response = await serverURL.get('/login', {
-    //         params:{
-    //             data,
-    //         },
-    //     }).then(response => {
-    //         console.log(response.data)
-    //     }).catch(error =>{
-    //         console.log(error)
-    //     })
-    // }
-
-    // const onSubmit = (data) => {
-    //     postLogin(data)
-    // }
-
-
 
 
     return(

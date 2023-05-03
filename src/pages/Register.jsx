@@ -17,7 +17,7 @@ const Register = () => {
 
     const postRegister = async (e) => {
         if(password!=password2){
-            alert(password2)
+            alert("Неверный пароль")
         }else{
             await axios.post("http://localhost:8080/register", 
             UserClass
@@ -48,7 +48,7 @@ const Register = () => {
                 }} ></input>
                 <br></br>
                 <br></br>
-                <button type="submit">KEK</button>
+                <button type="submit">Зарегистрироваться</button>
             </form>
         </div>
 
