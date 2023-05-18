@@ -2,49 +2,42 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 
-const AdvertCreate = () =>{
+const DiscussionCreate = () =>{
     const navigate = useNavigate()
     
     const [options, setOptions] = useState([])
-    const [advert, setAdvert] = useState({
-        user : JSON.parse(localStorage.getItem("user")),
+    const [discussion, setDiscussion] = useState({
         car : {},
-        description : "",
-        price : "",
-        photo_url:"",
-        city:"",
-
+        theme : "",
     })
     const [carOption, setCarOption] = useState(null);
     
-    var {description, price, car, user, photo_url, city} = advert
+    var {theme} = discussion
     
     const inputChange = (e)=>{
-        setAdvert({...advert, [e.target.name]:e.target.value})
-        console.log(e.target.value)
-        console.log(advert.car)
+        setDiscussion({...discussion, [e.target.name]:e.target.value})
+        // console.log(e.target.value)
+        // console.log(discussion.car)
     }
 
     const handleSelectChange = (e)=>{
         const v = e.target.value;
         setCarOption(v)
-        setAdvert({...advert, car:JSON.parse(v)})
+        setDiscussion({...discussion, car:JSON.parse(v)})
 
         
     }
-    const [kekw, setKekw] = useState()
+    const [kekw,setKekw] = useState()
 
     useEffect(()=>{
         if(localStorage.getItem("user") ===null){
             alert("Вы не зарегистрированны")
             navigate("/login");
         }
-        setAdvert({...advert, user:JSON.parse( localStorage.getItem("user") )})
-        console.log(advert.user)
         axios.get("http://localhost:8080/carmenu").then(response =>{
             console.log(response.status);
             setOptions(response.data)
-            setAdvert({...advert, car: ""  })
+            setDiscussion({...discussion, car: ""  })
         }).catch(console.error())
         
         
@@ -54,19 +47,20 @@ const AdvertCreate = () =>{
 
     const postCreate = async (e) => {
         e.preventDefault()
-        if(advert.car ===""){
+        if(discussion.car ===""){
             alert("Сделайте выбор")
             console.log("Ошибка")
             return
+            // setDiscussion({...discussion, theme:null})
         }
         // // car_id = foundOption
         // setAdvert({...advert, car: foundOption})
         // console.log(foundOption)
         // console.log(advert.car)
-        await axios.post("http://localhost:8080/advert/create", 
-            advert
+        await axios.post("http://localhost:8080/discussion/create", 
+            discussion
             ).then(response => {
-                setKekw(advert)
+                setKekw(discussion)
             }).catch(error =>{
                 console.log(error)
             })
@@ -82,10 +76,10 @@ const AdvertCreate = () =>{
         <form onSubmit={(e)=>{
                 postCreate(e);
             }}>
-                <div 
+            <div 
                 style={{
                     width: "400px",
-                    height: "400px",
+                    height: "200px",
                     display: "flex",
                     color : "blue",
                     flexDirection: "column",
@@ -97,20 +91,8 @@ const AdvertCreate = () =>{
                     border: "0px !important",
                   }}
                   >
-            <label for ="description" class="form-label">Введите описание объявления</label>
-            <input class="form-control" type='text' name='description' value={description} onChange={(e)=>{
-                    inputChange(e)
-            }}></input>
-            <label for ="description" class="form-label">Введите цену продажи</label>
-            <input class="form-control" type='number' name='price' value={price} onChange={(e)=>{
-                    inputChange(e)
-            }}></input>
-            <label for ="photo_url" class="form-label">Введите ссылку на фото машины</label>
-            <input class="form-control" type='text' name='photo_url' value={photo_url} onChange={(e)=>{
-                    inputChange(e)
-            }}></input>
-            <label for ="city" class="form-label">Ваш город</label>
-            <input class="form-control" type='text' name='city' value={city} onChange={(e)=>{
+            <label for ="theme" class="form-label">Введите тему обсуждения</label>
+            <input class="form-control" type='text' name='theme' value={theme} onChange={(e)=>{
                     inputChange(e)
             }}></input>
             
@@ -128,16 +110,16 @@ const AdvertCreate = () =>{
             </datalist> */}
 
             {/* Брендан Эйх как же ты слаб  */}
-            <label class="form-label">Выберите машину</label>
+            <label class="form-label">Выберите машину для обсуждения</label>
             <select class="form-control" value={carOption} onChange={(e)=>{
                     handleSelectChange(e)
-                    console.log(advert.car)
+                    // console.log(discussion.car)
             }}
             >
-            <option value="">Выберите опцию</option>
+            <option value= {JSON.stringify("")} >Выберите опцию</option>
             {options.map((option) => (
             <option key={option.id } value={JSON.stringify( option)}>
-            {option.brand +" " +option.model +" "+option.engine +" "+option.drive +" "}
+            {option.name}
             </option>
         ))}
             </select>
@@ -159,4 +141,4 @@ const AdvertCreate = () =>{
     )
 };
 
-export default AdvertCreate;
+export default DiscussionCreate;

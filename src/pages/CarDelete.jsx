@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 
 const CarDelete = () =>{
-    const navigate = useNavigate
+    const navigate = useNavigate();
     const { id } = useParams();
 
     useEffect(()=>{
