@@ -23,10 +23,6 @@ import DiscussionChart from './pages/Chart';
 
 
 function App() {
-
-
-  //
-
   return (
     <>
     <div className="App">
@@ -62,7 +58,6 @@ function App() {
         <Route path='/admin/userMenu'>
           <Route index element = {<UserMenu />}></Route>
         </Route>
-
       </Route>
       <Route path='/home' element={<Home />}></Route>
       <Route path='/chart' element={<DiscussionChart />}></Route>
@@ -70,7 +65,6 @@ function App() {
       <Route path='/home/dialogmenu' element={<DialogMenu />}></Route>
       <Route path='/home/dialog/:id' element={<DialogAnsw />}></Route>
     </Routes>  
-        
     </div>
     </>
   );

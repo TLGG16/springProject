@@ -68,7 +68,6 @@ const CarMenu = () =>{
                 )
               }
               
-                
               </tr>
             ))}
           </tbody>
